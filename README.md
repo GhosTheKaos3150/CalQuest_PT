@@ -6,7 +6,7 @@ TODO
 
 The following are the licences for each of the sources used in the dataset:
 - **ShareGPT**: Apache-2, available at [https://huggingface.co/datasets/anon8231489123/ShareGPT_Vicuna_unfiltered](https://huggingface.co/datasets/anon8231489123/ShareGPT_Vicuna_unfiltered).
-- **WildChat**: AI2 ImpACT License – Low Risk Artifacts, available at [https://allenai.org/licenses/impact-lr](https://allenai.org/licenses/impact-lr)NaturalQuestions/download)
+- **WildChat**: AI2 ImpACT License – Low Risk Artifacts, available at [https://allenai.org/licenses/impact-lr](https://allenai.org/licenses/impact-lr)
 - **Reddit**: Unknown Free to use for Non-Commercial (Academmic) purposes.
 
 We invite all users of CausalQuest to carefully read and respect the licenses of the sources.
