@@ -1,0 +1,19 @@
+prompt_ccp_fs = '''A pergunta que se segue foi feita por um humano. Essa pergunta é uma pergunta causal. Você deve classificar a pergunta em uma das seguintes categorias, de acordo com a Cadeia de Causalidade de Pearl:
+
+Associacional: Esta categoria se refere a perguntas que levantam uma relação de associação estatística e correlação entre duas variáveis, questionando sobre a possibilidade de ocorrência de evento Y dado um evento inicial X. Exemplo disto são perguntas como "O que a rejeição na vaga nos diz sobre o candidato?" ou "Qual a melhor linguagem de programação para ciência de dados?". Essa associação pode ser explicita, como nos exemplos anteriores, como pode implicita como em "Estou com dor nos olhos e nas juntas, que doença poderia ser?", onde o interlocutor busca saber qual enfermidade que possuiria a maior correlação com os sintomas que ele ou ela sente. Também podemos ver isso em perguntas de recomendação, como "Quais os melhores investimentos de renda fixa para um estudante?", onde o interlocutor busca uma recomendação de investimento que tenha uma melhor correlação com seu perfil financeiro. Esse tipo de pergunta abrange vários formatos, como buscar métodos que tenham uma correlação com determinado fim (Exemplo: Como trabalhar em dois empregos?), buscar um local ou objeto que tenha uma correlação com uma necessidade do interlocutor (Exemplo: Onde posso ir para relaxar?) ou buscar um motivo que tenha correlação com um evento (Porquê as folhas estão ficando amareladas?).
+
+Intervencional: Esta categoria contém perguntas que buscam entender para além de uma correlação entre dois eventos. Para isso, o indivíduo pergunta de forma a intervir no sistema, modificando ou adicionando uma ação para entender o efeito final dela. Exemplo disto são perguntas como "Se ela ganhar mais experiência de trabalho, ela será contratada?" ou "Se eu adicionar frutas ao bolo, ele ficará doce?". Esse tipo de pergunta pode também ser uma comparação entre opções, onde o interlocutor deseja saber qual das duas trará o melhor resultado, como em "Devo acordar mais cedo todos os dias e ter mais tempo ou acordar mais tarde e ficar mais descansado?". Ela também pode ser implicita, como em "Eu deveria comprar equipamento novo para meu trabalho?", onde o interlocutor deseja saber qual o impacto que realizar essa ação/intervenção terá em seu futuro.
+
+Contrafactual: Esta categoria contém perguntas sobre realidades alternativas, modificando variáveis de um evento que já ocorreu para entender como ele ocorreu e que possíveis futuros poderiam ter ocorrido se alguma das variáveis envolvidas tivesse sido diferente. As perguntas causais contrafactuais geram hipóteses de outras possíveis causas. Exemplos deste tipo de pergunta são "Eu fui rejeitado por que não tinha experiência?" ou "Eu desenvolvi condromalácia por estar acima do peso?".
+
+Exemplos de perguntas classificadas em uma das três categorias – Associacional, Intervencional, Contrafactual:
+Pergunta: Por que entrevista de emprego virou tortura? Categoria: Associacional
+Pergunta: Consigo fazer mestrado me graduando em EAD? Categoria: Intervencional
+Pergunta: Eu teria ótimas oportunidades de emprego com estes cursos no currículo + minha experiência? Categoria: Contrafactual
+Pergunta: Essa nova geração é realmente pior que a passada? Categoria: Associacional
+Pergunta: Vocês acham que perderiam suas amizades se descobrissem tudo o que você pensa? Categoria: Intervencional
+Pergunta: O que teria acontecido se nunca tivesse existido exploração no mundo? Categoria: Contrafactual
+
+Segue a pergunta: {PERGUNTA} e solicito que você classifique em uma das três categorias acima detalhadas: Associacional, Intervencional ou Contrafactual. Caso não consiga classificar em uma delas, classifique como "None". Não responda a pergunta apresentada! Retorne apenas a categoria e o raciocínio que justifica sua classificação, no seguinte formato:
+CATEGORIA:
+RACIOCÍNIO:'''

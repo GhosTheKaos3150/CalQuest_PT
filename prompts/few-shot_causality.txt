@@ -1,0 +1,21 @@
+A pergunta que se segue foi feita por um humano e você deve classificar esta pergunta em uma das categorias a seguir:
+
+Categoria 1: Causal. Essa categoria inclui perguntas que implicam relações de causa e efeito em geral, sendo necessário uso de conhecimento de causa e efeito e raciocínio para obter uma resposta. Uma pergunta causal pode ter três tipos de objetivo ou comportamento. Podem ser (1) Dado a causa, prever o efeito: busca por entender o impacto ou desfecho de uma causa específica, que pode envolver em prever o futuro ou cenários hipotéticos (Exemplo: O que acontece se eu apostar na loteria? Eu deveria aprender uma nova linguagem de programação? Energias renováveis serão o futuro de nossa matriz energética? O que aconteceria se não existissem redes sociais?); (2) Dado um efeito, prever uma causa: Pergunta o “porquê” de algo ter ocorrido (Exemplo: Por que maçãs caem?), questionar a causa de um certo efeito, perguntar sobre a razão por trás de algo ou as ações que são necessárias para se obter um objetivo específico, como fazer algo, de forma implícita ou explícita (Exemplo: Por que movimentos extremistas estão aumentando ultimamente? Como ganhar um milhão de reais? Como posso aprender uma nova linguagem em 30 dias?). Isso também inclui casos onde o efeito não é explícito: qualquer pedido com um propósito, buscando por meios de cumpri-lo. Isso torna necessário achar a ação (causa) que melhor realizaria um certo objetivo (efeito), sendo este último podendo também ser implícito. Se alguém pede por recomendação de um restaurante, o que ele ou ela busca é a melhor causa (restaurante) para obter um certo efeito (Exemplo: comer saudável). Se busca por uma receita vegana, ele ou ela está buscando uma receita que seja a causa da melhor refeição possível. Perguntas requisitando “a melhor forma” de fazer alguma coisa se encaixam nessa categoria; (3) Dado um conjunto de variáveis, julgar a relação causal entre elas: Questiona a relação causal entre um conjunto de entidades (Exemplo: Fumar causa câncer? Eu fui rejeitado na entrevista de emprego porquê não tenho experiência?).
+
+Categoria 2: Não-Causal. São perguntas que não implicam nenhuma das relações causais citadas anteriormente. Por exemplo, uma pergunta não causal pode ser um pedido de tradução, correção, para parafrasear um texto, para criar uma história, jogar um jogo, encontrar uma solução para um problema matemático, ou um enigma que requer um raciocínio matemático, prover alguma informação sobre algo (softwares, sites, endereços, eventos, locais em geral) ou usar tal informação para fazer uma comparação, sem muito raciocínio envolvido. Estas perguntas seriam não-causal, pois não o usuário está apenas buscando por uma informação.
+
+Exemplos:
+Pergunta: Qual o pior jeito de ganhar dinheiro? Categoria: <Causal>
+Pergunta: Por que casas de apostas como tigrinho ou blazer não são derrubadas? Categoria: <Causal>
+Pergunta: Tem alguma coisa que você faz por obrigação? Categoria: <Não-Causal>
+Pergunta: Qual sua lembrança mais feliz? Categoria: <Não-Causal>
+Pergunta: Qual é a temperatura adequada para um rack de pabx e de um rack de rede switch? Categoria: <Causal>
+Pergunta: Qual será a reação química se "(NH2)2CO" for adicionado a "NaCl"? Categoria: <Causal>
+Pergunta: Em que países atualmente vigoram a monarquia eletiva? Categoria: <Não-Causal>
+Pergunta: Qual é a ultima versão do pytorch lançada? Categoria: <Não-Causal>
+Pergunta: Qual é a melhor forma de retirar o fundo de uma fotografia no photoshop? Categoria: <Causal>
+Pergunta: Qual o trajeto de carro eu posso fazer entre São Paulo e Brasília? Categoria: <Causal>
+Pergunta: Você consegue achar no nosso histórico de conversas por um assunto especifico? Categoria: <Não-Causal>
+Pergunta: O que é um disco de vinil? Categoria: <Não-Causal>
+
+Segue a pergunta: {PERGUNTA} e solicito que você classifique em uma das duas categorias acima detalhadas: Causal e Não-Causal; não responda a pergunta apresentada! Retorne apenas a categoria e o raciocínio que justifica sua classificação, no seguinte formato: {"Categoria": "Resultado da sua classificação", "Raciocínio": "Apresente, resumidamente, qual foi o seu raciocínio para chegar na sua classificação."}

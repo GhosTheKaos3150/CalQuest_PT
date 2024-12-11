@@ -1,0 +1,39 @@
+A pergunta que se segue foi feita por um humano. Essa pergunta é uma pergunta causal. Você deve classificar a pergunta em uma das seguintes categorias de ação:
+
+Busca-Causa: Explica a causa que é origem de um determinado fenômeno. O indivíduo busca descobrir a causa ou justificativa para algo ser como é. Pode ser uma pergunta contendo um "Por quê" (Exemplo: Por quê as folhas caem no outono?; Por quê o céu é azul?). Ele também pode buscar entender uma explicação ou importância de uma sentença, ideia ou trabalho criativo, tal como o significado de letras musicais, poemas ou da narrativa de uma estória (Exemplo: Qual o significado da musica "Tempo Perdido"?, Quais são as principais causas de Alzheimer?). Resumindo, esse tipo de pergunta busca descobrir a causa ou justificativa para algo ser como é ou ter acontecido como aconteceu. Fórmula
+Dado: efeito, Pede por: causa(s).
+
+Busca-Efeito: Procura prever os efeitos de uma ação, ou prever o futuro dado circunstâncias do passado, ou ainda prever um cenário hipotético dado uma condição contrafactual (Exemplo: Energias renováveis serão nossa principal fonte de energia no futuro? Como o mundo seria se a internet não tivesse sido inventada?). Fórmula
+Dado: causa(s), Pede por: efeito(s).
+
+Busca-Relação: Questiona a relação de causa-e-efeito entre entidades distintas. O indivíduo busca entender se há uma relação de causa e efeito entre as entidades apresentadas na pergunta (Exemplo: Fumar causa câncer de pulmão? Poluição do ar pode aumentar o risco de doenças respiratórias?). Essa classe difere das classes "Busca-Causa" e "Busca-Efeito" pois quem questiona apresenta uma hipótese de causa e efeito, e se questiona se há relação causal na situação. Fórmula
+Dado: conjunto de causas e efeitos, Pede por: relação causal.
+
+Busca-Recomendação: Dado um objetivo implícito ou explícito e um conjunto de opções, pede para apontar a melhor opção para cumprir o objetivo (Exemplo: “Eu deveria tentar passar em um concurso para ter melhores chances de trabalho?”; “Qual a melhor pizzaria de Fortaleza?”). O indivíduo possui um objetivo e um conjunto de opções a sua escolha, e ele deseja escolher a opção que maximize os resultados do seu objetivo. Esta categoria se difere da “Busca-Passos” pois o individuo possui um conjunto de opções, e necessariamente deseja escolher a melhor delas. Fórmula
+Dado: (efeito/propósito humano teleológico), Pede por: Guia que maximize os resultados(Satisfaz o propósito)
+
+Busca-Passos: Propõe a solução de um problema por meio de um conjunto de passos ou algrítmo (Exemplo: “Como posso aprender inglês em 6 meses?”; “Crie uma receita vegana com batata-doce e feijão.”; “Otimize este código para que ele fique mais rápido.”). O indivíduo tem um propósito a ser cumprido, e deseja obter uma solução em forma de um conjunto de passos que possam ser seguidos. A resposta para essa pergunta pode ser tanto uma lista de passos, como um programa de computador, como uma receita. As perguntas podem tanto ter apenas uma forma de serem respondidas, como também ter mais de uma forma de atingir seu objetivo. Não implica a necessidade de ponderar as possibilidades e escolher a melhor entre elas. Fórmula
+Dado: (efeito/propósito humano teleológico), Pede por: Causas em formato de guia passo a passo, código ou receita.
+
+Lembre-se, em resumo: "Busca-Causa" busca descobrir a causa ou justificativa para algo ser como é ou ter acontecido como aconteceu; "Busca-Efeito" busca prever os efeitos de uma ação, ou prever o futuro dado circunstâncias do passado, ou ainda prever um cenário hipotético dado uma condição contrafactual; “Busca-Relação” busca entender se há uma relação de causa e efeito entre as entidades apresentadas na pergunta; “Busca-Recomendação” possui um objetivo e um conjunto de opções a sua escolha, e ele deseja escolher a opção que maximize os resultados do seu objetivo; “Busca-Passos” possui um propósito a ser cumprido, e deseja obter uma solução em forma de um conjunto de passos que possam ser seguidos;
+
+Exemplos:
+Pergunta: Porque as lojas dão desconto pra pagamento via pix, mas pra boleto não? Categoria: Busca-Causa
+Pergunta: Quais são os sinais de que um relacionamento é feliz e saudável na opinião de vocês? Categoria: Busca-Efeito
+Pergunta: Existe uma idade mínima ou ideal para aprender sobre política e economia? Categoria: Busca-Relação
+Pergunta: Qual midia da mais liberdade criativa pro criador?livro,filme,serie ou quadrinho? Categoria: Busca-Recomendação
+Pergunta: Como mudo meu nome no reddit? Categoria: Busca-Passos
+Pergunta: Por que a Globo corta os filmes na programação? Categoria: Busca-Causa
+Pergunta: Como seria se cada arroz fosse feijão? Categoria: Busca-Efeito
+Pergunta: Tosse seca é sintoma de Dengue? Categoria: Busca-Relação
+Pergunta: Você pode fazer uma estratégia da Ferrari para voltar a vencer corridas na F1? Categoria: Busca-Recomendação
+Pergunta: Me dê uma introdução para um manual de passo a passo de organização digital. Categoria: Busca-Passos
+Pergunta: Como acontecem invasões em sites que foram criados usando WordPress? Categoria: Busca-Causa
+Pergunta: eu tenho 1,75m e peso 117Kg, sou obeso? Categoria: Busca-Efeito
+Pergunta: Os refrigerantes com 50% de fruta são saudáveis? Categoria: Busca-Relação
+Pergunta: Qual a melhor forma de usar o ChatGTP para criar conteúdo? Categoria: Busca-Recomendação
+Pergunta: como implementar uma instancia de leitura e uma de escrita do banco de dados no Laravel 7.4 Categoria: Busca-Passos
+
+Segue a pergunta: {PERGUNTA} e solicito que você classifique em uma das cinco categorias acima detalhadas: Busca-Causa, Busca-Efeito, Busca-Relação, Busca-Recomendação e Busca-Passos; não responda a pergunta apresentada! Retorne apenas a categoria e o raciocínio que justifica sua classificação, no seguinte formato:
+CATEGORIA:
+RACIOCÍNIO:'''
