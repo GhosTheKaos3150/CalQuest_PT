@@ -5,7 +5,14 @@ from tqdm import tqdm
 
 def generate_inference(golden_collection: pd.DataFrame):
     '''
-    TODO Documentação
+    This function generates the Inference for all classifications on the three-axis classification used on the
+    CalQuest.PT (Causality, Action Class and Pearl Class). Prompts are available on the "./prompts/" folder as
+    .txt files. This function will use Few-Shot with Chain of Thought method.
+    
+    Parameters:
+    : golden_collection - Golden Collection dataset, before inference.
+    
+    Return: Golden Collection, updated with Chain of Thought results.
     '''
     
     gc_infered_chain_of_thought = inference_causality(golden_collection)
@@ -16,7 +23,12 @@ def generate_inference(golden_collection: pd.DataFrame):
 
 def inference_causality(golden_collection: pd.DataFrame):
     '''
-    TODO Documentação
+    This function generates inference for Causality classification.
+    
+    Parameters:
+    : golden_collection - Golden Collection dataset, before inference.
+    
+    Return: Golden Collection, updated with Chain of Thought results for Causality classification.
     '''
     
     api_key = os.environ['OPENAI_API_KEY']
@@ -71,7 +83,12 @@ def inference_causality(golden_collection: pd.DataFrame):
 
 def inference_actions(golden_collection: pd.DataFrame):
     '''
-    TODO Documentação
+    This function generates inference for Actions classification.
+    
+    Parameters:
+    : golden_collection - Golden Collection dataset, before inference.
+    
+    Return: Golden Collection, updated with Chain of Thought results for Action classification.
     '''
     
     api_key = os.environ['OPENAI_API_KEY']
@@ -131,7 +148,12 @@ def inference_actions(golden_collection: pd.DataFrame):
 
 def inference_pearl(golden_collection: pd.DataFrame):
     '''
-    TODO Documentação
+    This function generates inference for Pearl classification.
+    
+    Parameters:
+    : golden_collection - Golden Collection dataset, before inference.
+    
+    Return: Golden Collection, updated with Chain of Thought results for Pearl classification.
     '''
     
     api_key = os.environ['OPENAI_API_KEY']
@@ -191,7 +213,11 @@ def inference_pearl(golden_collection: pd.DataFrame):
 
 def get_prompt_cot_causality():
     '''
-    TODO Documentação
+    This function read the Chain of Thought prompt file for Causality.
+    
+    Parameters: -
+    
+    Return: Prompt for CoT Causality.
     '''
     
     with open('./prompts/cot_causality.txt', 'r') as file:
@@ -201,7 +227,11 @@ def get_prompt_cot_causality():
 
 def get_prompt_cot_actions():
     '''
-    TODO Documentação
+    This function read the Chain of Thought prompt file for Action Class.
+    
+    Parameters: -
+    
+    Return: Prompt for CoT Action Class.
     '''
 
     with open('./prompts/cot_actions.txt', 'r') as file:
@@ -211,7 +241,11 @@ def get_prompt_cot_actions():
 
 def get_prompt_cot_pearl():
     '''
-    TODO Documentação
+    This function read the Chain of Thought prompt file for Pearl Class.
+    
+    Parameters: -
+    
+    Return: Prompt for CoT Pearl Class.
     '''
 
     with open('./prompts/cot_pearl.txt', 'r') as file:

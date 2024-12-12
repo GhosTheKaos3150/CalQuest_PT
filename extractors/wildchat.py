@@ -5,7 +5,13 @@ from CalQuest_PT.extractors.utils import get_first_user_content, get_first_bot_c
 
 def get_wc(): 
     '''
-    TODO Documentação
+    This function downloads and preprocess WildChat data from HuggingFace. As it uses HuggingFace Hub Library,
+    you will need a HuggingFace Account and Token for using this function. Place the Token on
+    the .env file.
+    
+    Parameters: - 
+    
+    Return: Wildchat Preprocessed data.
     '''
     
     login(token=os.environ['TOKEN_HUGGINGFACE'])

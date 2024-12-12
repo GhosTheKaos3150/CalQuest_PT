@@ -5,10 +5,19 @@ from apify_client import ApifyClient
 
 def get_reddit():
     '''
-    TODO Documentação
+    This function will download and pre-process Reddit data. This function uses an
+    Apify actor for Reddit data crawling, as using Reddit Data API is difficult. For using
+    Apify, you will need a subscription and providing the API Key on the .env file.
+    
+    Parameters: - 
+    
+    Return: Reddit Data Processed
     '''
     
+    # Download
     reddit_data = download_from_apify()
+    
+    # Pre-Process
     questions = reddit_data['title'].apply(lambda x: 
                 str(x).lower().__contains__("?") or str(x).lower().__contains__("por que") or str(x).lower().__contains__("por quê") or
                 str(x).lower().__contains__("o que") or str(x).lower().__contains__("quem") or str(x).lower().__contains__("como") or
@@ -30,18 +39,33 @@ def get_reddit():
 
 def download_from_apify():
     '''
-    TODO Documentação
+    This function downloads Reddit Data, using an Apify actor for data
+    acquisition. This function uses an Apify actor for Reddit data crawling, as using Reddit Data API 
+    is difficult. For using Apify, you will need a subscription and providing the API Key on the .env 
+    file. You may need an Apify Subscription for using the actor, since the platform free-tier will not
+    be enough for crawling the original 5k results.
+    
+    NOTE: Reddit data will vary over time, since the forums will be updated daily by Reddit users. 
+    Executing the process in the future will result on different Reddit data being processed. If you are
+    trying to reproduce the article results, copy "./experiment_data/reddit_pt_br_lg.xlsx" to "./data_gen/" 
+    folder.
+    
+    Parameters: -
+    
+    Return: Reddit raw data.
     '''
     
     if not os.path.exists("./data_gen/reddit_pt_br_lg.xlsx"):
-        # Estimated cost: USD$ 20
+        # Estimated cost for 1k results per subreddit: USD$ 20
+        n_results = 1000
+        
         urls = [
-            ('https://www.reddit.com/r/PergunteReddit/', 1000),
-            ('https://www.reddit.com/r/brdev/', 1000),
-            ('https://www.reddit.com/r/conselhodecarreira/', 1000),
-            ('https://www.reddit.com/r/programacao/', 1000),
-            ('https://www.reddit.com/r/askacademico/', 1000),
-            ('https://www.reddit.com/r/ApoioVet/', 1000),
+            ('https://www.reddit.com/r/PergunteReddit/', n_results),
+            ('https://www.reddit.com/r/brdev/', n_results),
+            ('https://www.reddit.com/r/conselhodecarreira/', n_results),
+            ('https://www.reddit.com/r/programacao/', n_results),
+            ('https://www.reddit.com/r/askacademico/', n_results),
+            ('https://www.reddit.com/r/ApoioVet/', n_results),
         ]
         
         dfs = []
@@ -77,11 +101,11 @@ def download_from_apify():
                 
             dataset = pd.DataFrame(pre_data_records)
             
-            dataset = dataset[['id', 'title', 'parsedCommunityName', 'isAd', 'over18', 'createdAt', 'scrapedAt']]
+            dataset = dataset[['title', 'isAd', 'over18', 'scrapedAt']]
             
-            dataset.dropna(subset=['id', 'title', 'parsedCommunityName'])
+            dataset.dropna(subset=['title'])
             
-            dataset['id'] = dataset['id'].apply(lambda x: uuid.uuid4())
+            dataset['id'] = dataset['title'].apply(lambda x: uuid.uuid4())
             
             dfs.append(dataset)
         
@@ -91,5 +115,8 @@ def download_from_apify():
     else:
         final_df = pd.read_excel('./data_gen/reddit_pt_br_lg.xlsx')
         final_df.drop(columns=['Unnamed: 0'], inplace=True)
+        
+        if not "id" in final_df.columns:
+            final_df['id'] = final_df['title'].apply(lambda x: uuid.uuid4())
     
     return final_df

@@ -2,9 +2,15 @@ import os
 import openai
 import pandas as pd
 
-def generate_inference(df_5w2h: pd.DataFrame):
+def generate_inference(dataset: pd.DataFrame):
     '''
-    TODO Documentação
+    This function uses GPT to infer the 5W-2H classifications that are missing and were not classified by
+    using regex methods on previous steps.
+    
+    Parameters:
+    : dataset - Full CalQuest.PT dataset, with all data sources.
+    
+    Return: Full CaulQuest.PT dataset, with '5w2h' collumn completed.
     '''
     
     api_key = os.environ['OPENAI_API_KEY']
@@ -46,8 +52,8 @@ def generate_inference(df_5w2h: pd.DataFrame):
     CATEGORIA:'''
 
     if not os.path.exists("./data_gen/class_5w2h.xlsx"):
-        for i, sample in df_5w2h.iterrows():
-            if df_5w2h[df_5w2h['5w2h'] != '']:
+        for i, sample in dataset.iterrows():
+            if dataset[dataset['5w2h'] != '']:
                 continue
             
             try:
@@ -59,23 +65,23 @@ def generate_inference(df_5w2h: pd.DataFrame):
                 )
             except Exception as e:
                 print(e)
-                df_5w2h.at[i, '5w2h'] = "Outro"
-                df_5w2h.at[i, '5w2h_reasoning'] = ""
+                dataset.at[i, '5w2h'] = "Outro"
+                dataset.at[i, '5w2h_reasoning'] = ""
                 continue
 
             response = chat_completion.choices[0].message.content
             reasoning = response.split("RACIOCÍNIO:")[-1].strip()
             classification = response.split("RACIOCÍNIO:")[0].split("CATEGORIA:")[-1].strip()
             
-            df_5w2h.at[i, '5w2h'] = classification
-            df_5w2h.at[i, '5w2h_reasoning'] = reasoning
+            dataset.at[i, '5w2h'] = classification
+            dataset.at[i, '5w2h_reasoning'] = reasoning
         
-        df_5w2h.to_excel("./data_colins_2025/Experimento Amostra 3/class_5w2h.xlsx", index=False)
+        dataset.to_excel("./data_colins_2025/Experimento Amostra 3/class_5w2h.xlsx", index=False)
         
     else:
-        df_5w2h = pd.read_excel("./data_colins_2025/Experimento Amostra 3/class_5w2h.xlsx")
-        df_5w2h.fillna({'5w2h': ''}, inplace=True)
+        dataset = pd.read_excel("./data_colins_2025/Experimento Amostra 3/class_5w2h.xlsx")
+        dataset.fillna({'5w2h': ''}, inplace=True)
         
     client.close()
     
-    return df_5w2h
+    return dataset

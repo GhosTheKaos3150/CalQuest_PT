@@ -2,12 +2,17 @@ import os
 import pandas as pd
 from CalQuest_PT.extractors.utils import download_file, is_portuguese
 
-def get_sg(output_folder_path):
+def get_sg(output_folder_path: str):
     '''
-    TODO Documentação
+    This function downloads and preprocess the ShareGPT Data.
+    
+    Parameters:
+    : output_folder_path - Folder containing the ShareGPT files or where to download it.
+    
+    Return: ShareGPT preprocessed data
     '''
 
-
+    # Download
     if not os.path.exists(output_folder_path + '/sg_90k_part1.json') or not os.path.exists(output_folder_path + 'sg_90k_part2.json'):
         print("ShareGPT files not found, downloading")
         urls = [
@@ -24,6 +29,8 @@ def get_sg(output_folder_path):
     df_sg_2 = pd.read_json(output_folder_path + "sg_90k_part2.json")
     df_sg = pd.concat([df_sg_1, df_sg_2], ignore_index=True)
     
+    
+    # Preprocessing
     df_sg['query'] = df_sg['conversations'].apply(lambda x: next((item['value'] for item in x if item['from'] == 'human'), None))
     df_sg['answer'] = df_sg['conversations'].apply(lambda x: next((item['value'] for item in x if item['from'] == 'gpt'), None))
     

@@ -8,7 +8,16 @@ import dotenv
 
 def run():
     '''
-    TODO Documentação
+    This function runs the process to compile the CalQuest.PT dataset and it's Golden Collection
+    (Collection of 600 questions used for tests, metrics and comparisons).
+    
+    NOTE: Reddit data will vary over time, since the forums will be updated daily by Reddit users. 
+    Executing the process in the future will result on different Reddit data being processed. If you are
+    trying to reproduce the article results, copy "./experiment_data/reddit_pt_br_lg.xlsx" to "./data_gen/" folder.
+    
+    Parameters: -
+    
+    Return: -
     '''
     
     # Columns that begins with "hr_" are for Human Annotators 

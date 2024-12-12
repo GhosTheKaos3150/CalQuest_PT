@@ -1,25 +1,46 @@
 import pandas as pd
 
-def generate_inference_metrics(df: pd.DataFrame):
+def generate_inference_metrics(golden_collection: pd.DataFrame):
+    '''
+    This function generate Precision, Recall and F1-Score for the Golden Collection data.
+    It will generate the metrics for all dataset and separated by source.
+    
+    Parameters:
+    : golden_collection - Golden Collection Dataset, after inference.
+    
+    Return: -
+    '''
+    
     # Total
-    all_precision = calculate_precision(df)
-    all_recall = calculate_recall(df)
+    all_precision = calculate_precision(golden_collection)
+    all_recall = calculate_recall(golden_collection)
     all_f1_score = calculate_f1_score(all_precision, all_recall)
     
-    df_metrics = pd.concat([all_precision, all_recall, all_f1_score])
+    golden_collection_metrics = pd.concat([all_precision, all_recall, all_f1_score])
     
     # By Source
     for source in ['reddit', 'wildchat', 'sharegpt']:
-        source_precision = calculate_precision(df[df['source'] == source], source)
-        source_recall = calculate_recall(df[df['source'] == source], source)
+        source_precision = calculate_precision(golden_collection[golden_collection['source'] == source], source)
+        source_recall = calculate_recall(golden_collection[golden_collection['source'] == source], source)
         source_f1_score = calculate_f1_score(all_precision, all_recall, source)
         
-        df_metrics = pd.concat([df_metrics, source_precision, source_recall, source_f1_score])
+        golden_collection_metrics = pd.concat([golden_collection_metrics, source_precision, source_recall, source_f1_score])
     
-    df_metrics.sort_values(by='metric')
-    df_metrics.to_excel('./metrics_gen/golden_collect_metrics.xlsx')
+    golden_collection_metrics.sort_values(by='metric')
+    golden_collection_metrics.to_excel('./metrics_gen/golden_collect_metrics.xlsx')
 
-def calculate_precision(df: pd.DataFrame, source='all') -> pd.Series:
+def calculate_precision(golden_collection: pd.DataFrame, source='all') -> pd.Series:
+    '''
+    This function generates Precision for the Golden Collection. If no source is provided, will use all
+    data.
+    
+    Parameters:
+    : golden_collection - Golden Collection Dataset, after inference.
+    : source - Data source used.
+    
+    Return: Series with metrics for all classes.
+    '''
+    
     precisions = {
         "source": source,
         "metric": 'Precision',
@@ -36,68 +57,79 @@ def calculate_precision(df: pd.DataFrame, source='all') -> pd.Series:
     }
     
     # Causality
-    dividend = df[(df['hr_is_causal'] == True) & (df['hr_is_causal'] == df['is_causal'])].shape[0]
-    divisor = df[(df['is_causal'] == True)].shape[0]
+    dividend = golden_collection[(golden_collection['hr_is_causal'] == True) & (golden_collection['hr_is_causal'] == golden_collection['is_causal'])].shape[0]
+    divisor = golden_collection[(golden_collection['is_causal'] == True)].shape[0]
     
     precisions['causality'] = round(dividend/divisor, 2)
     
     # Non Causality
-    dividend = df[(df['hr_is_causal'] == False) & (df['hr_is_causal'] == df['is_causal'])].shape[0]
-    divisor = df[(df['is_causal'] == False)].shape[0]
+    dividend = golden_collection[(golden_collection['hr_is_causal'] == False) & (golden_collection['hr_is_causal'] == golden_collection['is_causal'])].shape[0]
+    divisor = golden_collection[(golden_collection['is_causal'] == False)].shape[0]
     
     precisions['non_causality'] = round(dividend/divisor, 2)
 
     # Action Class (Seek-Cause)
-    dividend = df[(df['hr_action_class'] == 'Busca-Causa') & (df['hr_action_class'] == df['action_class'])].shape[0]
-    divisor = df[(df['action_class'] == 'Busca-Causa')].shape[0]
+    dividend = golden_collection[(golden_collection['hr_action_class'] == 'Busca-Causa') & (golden_collection['hr_action_class'] == golden_collection['action_class'])].shape[0]
+    divisor = golden_collection[(golden_collection['action_class'] == 'Busca-Causa')].shape[0]
     
     precisions['action_class_SCause'] = round(dividend/divisor, 2)
 
     # Action Class (Seek-Effect)
-    dividend = df[(df['hr_action_class'] == 'Busca-Efeito') & (df['hr_action_class'] == df['action_class'])].shape[0]
-    divisor = df[(df['action_class'] == 'Busca-Efeito')].shape[0]
+    dividend = golden_collection[(golden_collection['hr_action_class'] == 'Busca-Efeito') & (golden_collection['hr_action_class'] == golden_collection['action_class'])].shape[0]
+    divisor = golden_collection[(golden_collection['action_class'] == 'Busca-Efeito')].shape[0]
 
     precisions['action_class_SEffect'] = round(dividend/divisor, 2)
 
     # Action Class (Seek-Relation)
-    dividend = df[(df['hr_action_class'] == 'Busca-Relação') & (df['hr_action_class'] == df['action_class'])].shape[0]
-    divisor = df[(df['action_class'] == 'Busca-Relação')].shape[0]
+    dividend = golden_collection[(golden_collection['hr_action_class'] == 'Busca-Relação') & (golden_collection['hr_action_class'] == golden_collection['action_class'])].shape[0]
+    divisor = golden_collection[(golden_collection['action_class'] == 'Busca-Relação')].shape[0]
     
     precisions['action_class_SRelation'] = round(dividend/divisor, 2)
 
     # Action Class (Seek-Steps)
-    dividend = df[(df['hr_action_class'] == 'Busca-Passos') & (df['hr_action_class'] == df['action_class'])].shape[0]
-    divisor = df[(df['action_class'] == 'Busca-Passos')].shape[0]
+    dividend = golden_collection[(golden_collection['hr_action_class'] == 'Busca-Passos') & (golden_collection['hr_action_class'] == golden_collection['action_class'])].shape[0]
+    divisor = golden_collection[(golden_collection['action_class'] == 'Busca-Passos')].shape[0]
     
     precisions['action_class_SSteps'] = round(dividend/divisor, 2)
 
     # Action Class (Seek-Recomm)
-    dividend = df[(df['hr_action_class'] == 'Busca-Recomendação') & (df['hr_action_class'] == df['action_class'])].shape[0]
-    divisor = df[(df['action_class'] == 'Busca-Recomendação')].shape[0]
+    dividend = golden_collection[(golden_collection['hr_action_class'] == 'Busca-Recomendação') & (golden_collection['hr_action_class'] == golden_collection['action_class'])].shape[0]
+    divisor = golden_collection[(golden_collection['action_class'] == 'Busca-Recomendação')].shape[0]
     
     precisions['action_class_SRecomm'] = round(dividend/divisor, 2)
 
     # Pearl Class (Assocciative)
-    dividend = df[(df['hr_pearl_class'] == 'Associacional') & (df['hr_pearl_class'] == df['pearl_class'])].shape[0]
-    divisor = df[(df['pearl_class'] == 'Associacional')].shape[0]
+    dividend = golden_collection[(golden_collection['hr_pearl_class'] == 'Associacional') & (golden_collection['hr_pearl_class'] == golden_collection['pearl_class'])].shape[0]
+    divisor = golden_collection[(golden_collection['pearl_class'] == 'Associacional')].shape[0]
     
     precisions['pearl_class_Assocc'] = round(dividend/divisor, 2)
 
     # Pearl Class (Intervencionist)
-    dividend = df[(df['hr_pearl_class'] == 'Intervencional') & (df['hr_pearl_class'] == df['pearl_class'])].shape[0]
-    divisor = df[(df['pearl_class'] == 'Intervencional')].shape[0]
+    dividend = golden_collection[(golden_collection['hr_pearl_class'] == 'Intervencional') & (golden_collection['hr_pearl_class'] == golden_collection['pearl_class'])].shape[0]
+    divisor = golden_collection[(golden_collection['pearl_class'] == 'Intervencional')].shape[0]
     
     precisions['pearl_class_Interv'] = round(dividend/divisor, 2)
 
     # Pearl Class (Contrafactual)
-    dividend = df[(df['hr_pearl_class'] == 'Contrafactual') & (df['hr_pearl_class'] == df['pearl_class'])].shape[0]
-    divisor = df[(df['pearl_class'] == 'Contrafactual')].shape[0]
+    dividend = golden_collection[(golden_collection['hr_pearl_class'] == 'Contrafactual') & (golden_collection['hr_pearl_class'] == golden_collection['pearl_class'])].shape[0]
+    divisor = golden_collection[(golden_collection['pearl_class'] == 'Contrafactual')].shape[0]
     
     precisions['pearl_class_Contra'] = round(dividend/divisor, 2)
     
     return pd.Series(precisions)
 
-def calculate_recall(df: pd.DataFrame, source='all') -> pd.Series:
+def calculate_recall(golden_collection: pd.DataFrame, source='all') -> pd.Series:
+    '''
+    This function generates Recall for the Golden Collection. If no source is provided, will use all
+    data.
+    
+    Parameters:
+    : golden_collection - Golden Collection Dataset, after inference.
+    : source - Data source used.
+    
+    Return: Series with metrics for all classes.
+    '''
+    
     recall = {
         "source": source,
         "metric": 'Recall',
@@ -114,68 +146,80 @@ def calculate_recall(df: pd.DataFrame, source='all') -> pd.Series:
     }
     
     # Causality
-    dividend = df[(df['hr_is_causal'] == True) & (df['hr_is_causal'] == df['is_causal'])].shape[0]
-    divisor = df[(df['hr_is_causal'] == True)].shape[0]
+    dividend = golden_collection[(golden_collection['hr_is_causal'] == True) & (golden_collection['hr_is_causal'] == golden_collection['is_causal'])].shape[0]
+    divisor = golden_collection[(golden_collection['hr_is_causal'] == True)].shape[0]
     
     recall['causality'] = round(dividend/divisor, 2)
     
     # Non Causality
-    dividend = df[(df['hr_is_causal'] == False) & (df['hr_is_causal'] == df['is_causal'])].shape[0]
-    divisor = df[(df['hr_is_causal'] == False)].shape[0]
+    dividend = golden_collection[(golden_collection['hr_is_causal'] == False) & (golden_collection['hr_is_causal'] == golden_collection['is_causal'])].shape[0]
+    divisor = golden_collection[(golden_collection['hr_is_causal'] == False)].shape[0]
     
     recall['non_causality'] = round(dividend/divisor, 2)
 
     # Action Class (Seek-Cause)
-    dividend = df[(df['hr_action_class'] == 'Busca-Causa') & (df['hr_action_class'] == df['action_class'])].shape[0]
-    divisor = df[(df['hr_action_class'] == 'Busca-Causa')].shape[0]
+    dividend = golden_collection[(golden_collection['hr_action_class'] == 'Busca-Causa') & (golden_collection['hr_action_class'] == golden_collection['action_class'])].shape[0]
+    divisor = golden_collection[(golden_collection['hr_action_class'] == 'Busca-Causa')].shape[0]
     
     recall['action_class_SCause'] = round(dividend/divisor, 2)
 
     # Action Class (Seek-Effect)
-    dividend = df[(df['hr_action_class'] == 'Busca-Efeito') & (df['hr_action_class'] == df['action_class'])].shape[0]
-    divisor = df[(df['hr_action_class'] == 'Busca-Efeito')].shape[0]
+    dividend = golden_collection[(golden_collection['hr_action_class'] == 'Busca-Efeito') & (golden_collection['hr_action_class'] == golden_collection['action_class'])].shape[0]
+    divisor = golden_collection[(golden_collection['hr_action_class'] == 'Busca-Efeito')].shape[0]
     
     recall['action_class_SEffect'] = round(dividend/divisor, 2)
 
     # Action Class (Seek-Relation)
-    dividend = df[(df['hr_action_class'] == 'Busca-Relação') & (df['hr_action_class'] == df['action_class'])].shape[0]
-    divisor = df[(df['hr_action_class'] == 'Busca-Relação')].shape[0]
+    dividend = golden_collection[(golden_collection['hr_action_class'] == 'Busca-Relação') & (golden_collection['hr_action_class'] == golden_collection['action_class'])].shape[0]
+    divisor = golden_collection[(golden_collection['hr_action_class'] == 'Busca-Relação')].shape[0]
     
     recall['action_class_SRelation'] = round(dividend/divisor, 2)
 
     # Action Class (Seek-Steps)
-    dividend = df[(df['hr_action_class'] == 'Busca-Passos') & (df['hr_action_class'] == df['action_class'])].shape[0]
-    divisor = df[(df['hr_action_class'] == 'Busca-Passos')].shape[0]
+    dividend = golden_collection[(golden_collection['hr_action_class'] == 'Busca-Passos') & (golden_collection['hr_action_class'] == golden_collection['action_class'])].shape[0]
+    divisor = golden_collection[(golden_collection['hr_action_class'] == 'Busca-Passos')].shape[0]
     
     recall['action_class_SSteps'] = round(dividend/divisor, 2)
 
     # Action Class (Seek-Recomm)
-    dividend = df[(df['hr_action_class'] == 'Busca-Recomendação') & (df['hr_action_class'] == df['action_class'])].shape[0]
-    divisor = df[(df['hr_action_class'] == 'Busca-Recomendação')].shape[0]
+    dividend = golden_collection[(golden_collection['hr_action_class'] == 'Busca-Recomendação') & (golden_collection['hr_action_class'] == golden_collection['action_class'])].shape[0]
+    divisor = golden_collection[(golden_collection['hr_action_class'] == 'Busca-Recomendação')].shape[0]
     
     recall['action_class_SRecomm'] = round(dividend/divisor, 2)
 
     # Pearl Class (Assocciative)
-    dividend = df[(df['hr_pearl_class'] == 'Associacional') & (df['hr_pearl_class'] == df['pearl_class'])].shape[0]
-    divisor = df[(df['hr_pearl_class'] == 'Associacional')].shape[0]
+    dividend = golden_collection[(golden_collection['hr_pearl_class'] == 'Associacional') & (golden_collection['hr_pearl_class'] == golden_collection['pearl_class'])].shape[0]
+    divisor = golden_collection[(golden_collection['hr_pearl_class'] == 'Associacional')].shape[0]
     
     recall['pearl_class_Assocc'] = round(dividend/divisor, 2)
 
     # Pearl Class (Intervencionist)
-    dividend = df[(df['hr_pearl_class'] == 'Intervencional') & (df['hr_pearl_class'] == df['pearl_class'])].shape[0]
-    divisor = df[(df['hr_pearl_class'] == 'Intervencional')].shape[0]
+    dividend = golden_collection[(golden_collection['hr_pearl_class'] == 'Intervencional') & (golden_collection['hr_pearl_class'] == golden_collection['pearl_class'])].shape[0]
+    divisor = golden_collection[(golden_collection['hr_pearl_class'] == 'Intervencional')].shape[0]
     
     recall['pearl_class_Interv'] = round(dividend/divisor, 2)
 
     # Pearl Class (Contrafactual)
-    dividend = df[(df['hr_pearl_class'] == 'Contrafactual') & (df['hr_pearl_class'] == df['pearl_class'])].shape[0]
-    divisor = df[(df['hr_pearl_class'] == 'Contrafactual')].shape[0]
+    dividend = golden_collection[(golden_collection['hr_pearl_class'] == 'Contrafactual') & (golden_collection['hr_pearl_class'] == golden_collection['pearl_class'])].shape[0]
+    divisor = golden_collection[(golden_collection['hr_pearl_class'] == 'Contrafactual')].shape[0]
     
     recall['pearl_class_Contra'] = round(dividend/divisor, 2)
     
     return pd.Series(recall)
 
-def calculate_f1_score(precision: dict, recall: dict, source='all') -> pd.Series:
+def calculate_f1_score(precision: pd.Series, recall: pd.Series, source='all') -> pd.Series:
+    '''
+    This function generates F1-Score for the Golden Collection. If no source is provided, will use all
+    data.
+    
+    Parameters:
+    : precision - Series with all Precision metrics.
+    : recall - Series with all Recall metrics.
+    : source - Data source used.
+    
+    Return: Series with metrics for all classes.
+    '''
+    
     f1_score = {
         "source": source,
         "metric": 'F1 Score',
