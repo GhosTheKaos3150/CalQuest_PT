@@ -19,8 +19,6 @@ def generate_inference_metrics(df: pd.DataFrame):
     df_metrics.sort_values(by='metric')
     df_metrics.to_excel('./metrics_gen/golden_collect_metrics.xlsx')
 
-    return df_metrics
-
 def calculate_precision(df: pd.DataFrame, source='all') -> pd.Series:
     precisions = {
         "source": source,
