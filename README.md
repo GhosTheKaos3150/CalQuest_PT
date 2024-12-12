@@ -3,6 +3,10 @@
 This repository contains all codes and data used on our research paper titled "**CaLQuest.PT: Towards the Collection and Evaluation of Natural Causal Ladder Questions in Portuguese for AI Agents**", by "Uriel Lasheras" and "Vládia Pinheiro".
 The code available in this repository contain all methods needed to reproduce our results, includind downloading data from sources, preporcessing, generating liguistic evaluation metrics, making inferences using LLMs (On this paper, GPT-4o) and generating inference evaluation metrics.
 
+### Credits
+
+Part of the code available on "./extractos/utils.py", "./extractos/sharegpt.py" and "./extractos/wildchat.py" are modified versions of [CausalQuest](https://github.com/roberto-ceraolo/causal-quest) code, modified for using the data of those datasets in Portuguese.
+
 ### Dataset
 
 All datasets used on the paper for Linguistic Metrics analysis and LLM Inference and Metric analysis are available on the [experiment_data](experiment-data) folder.
