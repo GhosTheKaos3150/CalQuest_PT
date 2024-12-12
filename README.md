@@ -2,6 +2,10 @@
 
 TODO
 
+### Dataset
+
+All datasets used on the paper for Linguistic Metrics analysis and LLM Inference and Metric analysis are available on the [experiment_data](experiment-data) folder.
+
 ### Dataset and Data Licenses
 
 The following are the licences for each of the sources used in the dataset:
@@ -11,7 +15,7 @@ The following are the licences for each of the sources used in the dataset:
 
 We invite all users of CausalQuest to carefully read and respect the licenses of the sources.
 
-## Repo structure
+## Repository structure
 
 TODO
 

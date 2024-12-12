@@ -45,9 +45,8 @@ def run():
     gc_infered_chain_of_thought = inference_cot.generate_inference(golden_collection.copy())
     
     # Inference Metrics
-    # TODO Metricas das inferencias
-    
-    return df_united
+    inference.generate_inference_metrics(gc_infered_few_shot)
+    inference.generate_inference_metrics(gc_infered_chain_of_thought)
 
 
 if __name__ == '__main__':
